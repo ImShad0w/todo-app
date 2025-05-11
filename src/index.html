@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ImShad0w | Todo-list</title>
+  </head>
+  <body>
+    <h1>Todo app</h1>
+    <div class="container">
+      <div class="input-field">
+        <label for="title">Title</label>
+        <input type="text" id="title"></input>
+      </div>
+      <div class="input-field">
+        <label for="description" >Description</label>
+        <textarea rows="10" cols="40" id="description"></textarea>
+      </div>
+      <div class="input-field">
+        <label for="date">Due date:</label>
+        <input type="date" id="dueDate"></input>
+      </div>
+      <div class="input-field">
+        <label for="priority">Priority</label>
+        <select id="priority">
+          <option value="high">High</option> 
+          <option value="mild">Mild</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+      <button id="submit">Add new todo</button>
+      <button id="show">Show todos in console</button>
+    </div>
+  </body>
+</html>
