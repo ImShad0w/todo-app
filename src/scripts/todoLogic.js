@@ -1,17 +1,21 @@
-// Todo array
 const todos = [];
 
-//base function to create a todo task
-function createTodo(title, description, dueDate,priority){
-  const todo = {title, description, dueDate, priority};
+function createTodo(title, description, dueDate, priority) {
+  const todo = { title, description, dueDate, priority, status: "pending" };
   todos.push(todo);
   return todo;
 }
 
-function showTodo(){
-  todos.forEach(todo => console.log(todo))
+function getTodos() {
+  return todos.slice();
 }
 
+function deleteTodo(todoIndex) {
+  return todos.splice(todoIndex, 1)
+}
 
-//Export the functions
-export{createTodo, showTodo};
+function toggleTodo() {
+  this.status = this.status === "pending" ? "done" : "pending";
+}
+
+export { createTodo, getTodos, deleteTodo, toggleTodo };

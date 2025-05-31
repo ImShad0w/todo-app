@@ -6,30 +6,35 @@
     <title>ImShad0w | Todo-list</title>
   </head>
   <body>
-    <h1>Todo app</h1>
     <div class="container">
-      <div class="input-field">
-        <label for="title">Title</label>
-        <input type="text" id="title"></input>
+      <div class="sidebar">
+        <h1>Shxdow | Todoist</h1>
+        <button id="openModal">Add todo</button>
       </div>
-      <div class="input-field">
-        <label for="description" >Description</label>
-        <textarea rows="10" cols="40" id="description"></textarea>
+      <div class="main">
+        <div id="todo-list">
       </div>
-      <div class="input-field">
-        <label for="date">Due date:</label>
-        <input type="date" id="dueDate"></input>
       </div>
-      <div class="input-field">
-        <label for="priority">Priority</label>
+    </div>
+    <!--Modal for adding the todo-->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <input type="text" id="title" placeholder="Meet with grandma at the graveyard"></input>
+        <input type="text" id="description" placeholder="Description"></input>
+        <input type="date" id="date"></input>
+        <label for="priority">Priority:</label>
         <select id="priority">
+          
+          <option value="severe">Severe</option> 
           <option value="high">High</option> 
-          <option value="mild">Mild</option>
-          <option value="low">Low</option>
+          <option value="mild">Mild</option> 
+          <option value="low">Low</option> 
         </select>
+        <div class="buttons">
+          <button type="submit" id="addTodo">Add todo</button>
+          <button type="cancel" id="cancel">Cancel</button>
+        </div>
       </div>
-      <button id="submit">Add new todo</button>
-      <button id="show">Show todos in console</button>
     </div>
   </body>
 </html>

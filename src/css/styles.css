@@ -1,5 +1,66 @@
-body{
-  background-color: blue;
+:root{
+  --main-color: #FFFFFF;
+  --header-clr: #F5F7FA;
+  --text-clr: #333333;
+  --soft-blue: #3A86FF;
 }
 
+body{
+  margin: 0;
+  padding: 0;
+  background-color: var(--main-color);
+}
 
+.container{
+  display:flex;
+  background-color: var(--main-color);
+  height: 100vh;
+}
+
+.sidebar{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--header-clr);
+  width: 20vw;
+  height: 100vh;
+}
+
+.main{
+  flex-grow: 1;
+}
+
+#myModal{
+  display: none; 
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  height: 50%;
+  transform: translateX(-50%); /* Adjust for centering */
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--main-color);
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: none;
+  width: 80%;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+}
+
+.modal-content input:nth-child(1){
+  color:black;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.modal-content input{
+  border:none;
+}
