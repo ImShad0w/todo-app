@@ -6,24 +6,27 @@
     <title>ImShad0w | Todo-list</title>
   </head>
   <body>
-    <div class="container">
+    <div class="main-container">
       <div class="sidebar">
         <h1>Shxdow | Todoist</h1>
         <button id="openModal">Add todo</button>
       </div>
       <div class="main">
-        <div id="todo-list">
+        <div class="container">
+          <h1>Today</h1>
+          <div id="todo-list">
+        </div>
       </div>
       </div>
     </div>
     <!--Modal for adding the todo-->
     <div id="myModal" class="modal">
       <div class="modal-content">
-        <input type="text" id="title" placeholder="Meet with grandma at the graveyard"></input>
-        <input type="text" id="description" placeholder="Description"></input>
-        <input type="date" id="date"></input>
+        <input type="text" id="title" placeholder="Meet with grandma at the graveyard" required></input>
+        <input type="text" id="description" placeholder="Description" required></input>
+        <input type="date" id="date" required></input>
         <label for="priority">Priority:</label>
-        <select id="priority">
+        <select id="priority" required>
           
           <option value="severe">Severe</option> 
           <option value="high">High</option> 
