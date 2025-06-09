@@ -43,6 +43,7 @@ function renderTodos() {
       const todoItem = document.createElement("div");
       const para = document.createElement("p");
       const para2 = document.createElement("p");
+      const para3 = document.createElement("p");
       const toggle = document.createElement("button");
       const todoBtn = document.createElement("div");
       const todoContent = document.createElement("div");
@@ -58,6 +59,7 @@ function renderTodos() {
       para.textContent = todo.title;
       para2.textContent = todo.description;
       para2.classList.add("description");
+      para3.textContent = todo.dueDate;
       todoItem.classList.add("todo-item");
       toggle.classList.add("toggle-btn");
 
@@ -81,6 +83,7 @@ function renderTodos() {
       todoBtn.appendChild(toggle);
       todoContent.appendChild(para);
       todoContent.appendChild(para2);
+      todoContent.appendChild(para3);
       todoItem.appendChild(todoBtn);
       todoItem.appendChild(todoContent);
       todoList.appendChild(todoItem);
