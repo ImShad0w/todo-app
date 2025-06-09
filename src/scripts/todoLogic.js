@@ -1,6 +1,5 @@
 const todos = [];
 
-
 function createTodo(
   title = "Untitled",
   description = "No description provided",
@@ -16,10 +15,6 @@ function createTodo(
 function getTodos() {
   return todos.slice();
 }
-
-//function deleteTodo(todoIndex) {
-//  return todos.splice(todoIndex, 1)
-//}
 
 function toggleTodo(id) {
   const todo = todos.find(todo => todo.id === id);
