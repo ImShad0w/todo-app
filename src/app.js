@@ -1,5 +1,5 @@
 import "./css/styles.css";
-import { createTodo, getTodos, deleteTodo, toggleTodo } from "./scripts/todoLogic.js";
+import { createTodo, getTodos, getTodo, toggleTodo } from "./scripts/todoLogic.js";
 
 const openModal = document.getElementById("openModal");
 const title = document.getElementById("title");
@@ -10,6 +10,7 @@ const date = document.getElementById("date");
 const priority = document.getElementById("priority");
 const addTodo = document.getElementById("addTodo");
 const todoList = document.getElementById("todo-list");
+const todoModal = document.getElementById("todoModal");
 
 openModal.addEventListener("click", () => {
   modal.style.display = "block";
@@ -54,7 +55,6 @@ function renderTodos() {
         renderTodos();
       })
 
-
       //Assign the values
       para.textContent = todo.title;
       para2.textContent = todo.description;
@@ -63,7 +63,12 @@ function renderTodos() {
       todoItem.classList.add("todo-item");
       toggle.classList.add("toggle-btn");
 
-      //Style the button accroding to the priority
+      //Assign an event listener to todoItem
+      todoItem.addEventListener("click", () => {
+        showTodo(todo.id);
+      })
+
+      //Style the button according to the priority
       switch (todo.priority) {
         case "mild":
           toggle.classList.add("mild");
@@ -117,6 +122,55 @@ function sortTodos() {
 
   // Append sorted todos back to the container
   todos.forEach(todo => container.appendChild(todo));
+}
+
+//Gets the todo by id
+function showTodo(id) {
+
+  const todoModalContent = document.querySelectorAll(".modal-content")[1];
+  //Cleanup after each opening
+  todoModalContent.innerHTML = "";
+  //Get the todo and the modal
+  const todo = getTodo(id);
+
+  if (todo) {
+    //Select the modal content of the todo
+
+    //Create elements based on the todo properties
+    const title = document.createElement("p");
+    const description = document.createElement("p");
+    const dueDate = document.createElement("p");
+    const priority = document.createElement("p");
+
+    //Create edit and close buttons
+    const close = document.createElement("button");
+    const edit = document.createElement("button");
+
+    //Add the values
+    title.textContent = todo.title;
+    description.textContent = todo.description;
+    dueDate.textContent = todo.dueDate;
+    priority.textContent = todo.priority;
+    close.textContent = "Close";
+    edit.textContent = "Edit";
+
+    //Append the content
+    todoModalContent.appendChild(title);
+    todoModalContent.appendChild(description);
+    todoModalContent.appendChild(dueDate);
+    todoModalContent.appendChild(priority);
+    todoModalContent.appendChild(close);
+    todoModalContent.appendChild(edit);
+
+    //Add closing logic
+    close.addEventListener("click", () => {
+      todoModal.style.display = "none";
+    })
+    //TODO: Create edit function that lets change the title, description, dueDate or priority of the todo
+  }
+
+  //Open the modal with it's content
+  todoModal.style.display = "block";
 }
 
 function closeModal() {

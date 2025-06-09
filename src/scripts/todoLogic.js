@@ -23,4 +23,12 @@ function toggleTodo(id) {
   }
 }
 
-export { createTodo, getTodos, toggleTodo };
+function getTodo(id) {
+  const todo = todos.find(todo => todo.id === id);
+  if (todo) {
+    return todo;
+  } else {
+    alert("No such todo.");
+  }
+}
+export { createTodo, getTodos, toggleTodo, getTodo };

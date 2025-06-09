@@ -146,3 +146,14 @@ body{
   justify-content: center; /* Center icon horizontally */
   align-items: center; /* Center icon vertically */
 }
+
+#todoModal{
+  display: none; 
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  height: 50%;
+  transform: translateX(-50%); /* Adjust for centering */
+}
