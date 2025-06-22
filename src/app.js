@@ -139,8 +139,13 @@ function showTodo(id) {
     const title = document.createElement("p");
     const description = document.createElement("p");
     const dueDate = document.createElement("p");
-    const priority = document.createElement("p");
+    const btnDiv = document.createElement("div");
 
+    title.classList.add("title");
+    description.classList.add("description");
+    description.classList.add("wrap-text");
+    dueDate.classList.add("date");
+    priority.classList.add("priority");
     //Create edit and close buttons
     const close = document.createElement("button");
     const edit = document.createElement("button");
@@ -148,18 +153,20 @@ function showTodo(id) {
     //Add the values
     title.textContent = todo.title;
     description.textContent = todo.description;
-    dueDate.textContent = todo.dueDate;
-    priority.textContent = todo.priority;
+    dueDate.textContent = "Due date: " + todo.dueDate;
     close.textContent = "Close";
     edit.textContent = "Edit";
 
+    edit.classList.add("btn");
+    close.classList.add("cancel");
+
     //Append the content
+    btnDiv.appendChild(edit);
+    btnDiv.appendChild(close);
     todoModalContent.appendChild(title);
     todoModalContent.appendChild(description);
     todoModalContent.appendChild(dueDate);
-    todoModalContent.appendChild(priority);
-    todoModalContent.appendChild(close);
-    todoModalContent.appendChild(edit);
+    todoModalContent.appendChild(btnDiv);
 
     //Add closing logic
     close.addEventListener("click", () => {
@@ -178,6 +185,9 @@ function showTodo(id) {
       const newPriority = document.createElement("select");
       const updateBtn = document.createElement("button");
 
+      updateBtn.classList.add("btn");
+      //Clear btnDiv
+      btnDiv.innerHTML = "";
       //Add types and content
       newTitle.type = "text";
       newTitle.value = todo.title;
@@ -218,9 +228,9 @@ function showTodo(id) {
       todoModalContent.appendChild(newDescription);
       todoModalContent.appendChild(newDueDate);
       todoModalContent.appendChild(newPriority);
-      todoModalContent.appendChild(close);
-      todoModalContent.appendChild(updateBtn);
-
+      btnDiv.appendChild(updateBtn);
+      btnDiv.appendChild(close);
+      todoModalContent.appendChild(btnDiv);
       //Add event listener to commit changes
       updateBtn.addEventListener("click", () => {
         updateTodo(newTitle.value, newDescription.value, newDueDate.value, newPriority.value, id)

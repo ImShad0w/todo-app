@@ -63,7 +63,7 @@ body{
 .modal-content input:nth-child(1){
   color:black;
   border: none;
-  font-size: 20px;
+  font-size: 1.5em;
   font-weight: bold;
 }
 
@@ -97,6 +97,7 @@ body{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin: 0;
 }
 
 .toggle-btn{
@@ -157,4 +158,39 @@ body{
   width: 50%;
   height: 50%;
   transform: translateX(-50%); /* Adjust for centering */
+}
+
+.btn {
+  background-color: var(--soft-blue);
+  color: white;
+  padding: 7px;
+  border-radius: 5px;
+  margin-right: 10px; 
+  font-size: 1em;
+  border: none;
+}
+
+.cancel{
+  padding: 7px;
+  border-radius: 5px;
+  margin-right: 10px; 
+  font-size: 1em;
+  border: none;
+}
+
+.wrap-text {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.title{
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0;
+}
+
+.date{
+  margin: 0;
 }
