@@ -32,4 +32,13 @@ function getTodo(id) {
   }
 }
 
-export { createTodo, getTodos, toggleTodo, getTodo };
+function updateTodo(title, description, dueDate, priority, id) {
+  const todo = todos.find(todo => todo.id === id);
+  if (todo) {
+    todo.title = title;
+    todo.description = description;
+    todo.duieDate = dueDate;
+    todo.priority = priority;
+  }
+}
+export { createTodo, getTodos, toggleTodo, getTodo, updateTodo };

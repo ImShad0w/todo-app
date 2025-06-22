@@ -125,6 +125,7 @@ body{
 .low{
   border: 4px solid blue;
 }
+
 #openModal{
   display: flex;
   justify-content: center;

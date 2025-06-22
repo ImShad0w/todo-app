@@ -1,6 +1,7 @@
 import "./css/styles.css";
-import { createTodo, getTodos, getTodo, toggleTodo } from "./scripts/todoLogic.js";
+import { createTodo, getTodos, getTodo, toggleTodo, updateTodo } from "./scripts/todoLogic.js";
 
+//Get the elements
 const openModal = document.getElementById("openModal");
 const title = document.getElementById("title");
 const description = document.getElementById("description");
@@ -64,7 +65,7 @@ function renderTodos() {
       toggle.classList.add("toggle-btn");
 
       //Assign an event listener to todoItem
-      todoItem.addEventListener("click", () => {
+      todoContent.addEventListener("click", () => {
         showTodo(todo.id);
       })
 
@@ -134,8 +135,6 @@ function showTodo(id) {
   const todo = getTodo(id);
 
   if (todo) {
-    //Select the modal content of the todo
-
     //Create elements based on the todo properties
     const title = document.createElement("p");
     const description = document.createElement("p");
@@ -166,7 +165,70 @@ function showTodo(id) {
     close.addEventListener("click", () => {
       todoModal.style.display = "none";
     })
+
     //TODO: Create edit function that lets change the title, description, dueDate or priority of the todo
+    edit.addEventListener("click", () => {
+      //Clear the form
+      todoModalContent.innerHTML = "";
+
+      //Create the input fields in which i can store the new properties
+      const newTitle = document.createElement("input");
+      const newDescription = document.createElement("input");
+      const newDueDate = document.createElement("input");
+      const newPriority = document.createElement("select");
+      const updateBtn = document.createElement("button");
+
+      //Add types and content
+      newTitle.type = "text";
+      newTitle.value = todo.title;
+
+      newDescription.type = "text";
+      newDescription.value = todo.description;
+
+      newDueDate.type = "date";
+      newDueDate.value = todo.dueDate;
+
+      //Create select options
+      const option1 = document.createElement("option");
+      option1.textContent = "Severe";
+      option1.value = "severe"
+
+      const option2 = document.createElement("option");
+      option2.textContent = "High";
+      option2.value = "high";
+
+      const option3 = document.createElement("option");
+      option3.textContent = "Mild";
+      option3.value = "mild";
+
+      const option4 = document.createElement("option");
+      option4.textContent = "Low";
+      option4.value = "low";
+
+      updateBtn.textContent = "Keep changes";
+
+      //Append the options to the select element
+      newPriority.appendChild(option1);
+      newPriority.appendChild(option2);
+      newPriority.appendChild(option3);
+      newPriority.appendChild(option4);
+
+      //Append the inputs into the todoModal
+      todoModalContent.appendChild(newTitle);
+      todoModalContent.appendChild(newDescription);
+      todoModalContent.appendChild(newDueDate);
+      todoModalContent.appendChild(newPriority);
+      todoModalContent.appendChild(close);
+      todoModalContent.appendChild(updateBtn);
+
+      //Add event listener to commit changes
+      updateBtn.addEventListener("click", () => {
+        updateTodo(newTitle.value, newDescription.value, newDueDate.value, newPriority.value, id)
+        //Render and close
+        renderTodos();
+        todoModal.style.display = "none";
+      })
+    })
   }
 
   //Open the modal with it's content
