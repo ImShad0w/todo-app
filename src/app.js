@@ -173,7 +173,6 @@ function showTodo(id) {
       todoModal.style.display = "none";
     })
 
-    //TODO: Create edit function that lets change the title, description, dueDate or priority of the todo
     edit.addEventListener("click", () => {
       //Clear the form
       todoModalContent.innerHTML = "";
