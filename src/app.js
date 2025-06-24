@@ -1,5 +1,16 @@
 import "./css/styles.css";
-import { createTodo, getTodos, getTodo, toggleTodo, updateTodo } from "./scripts/todoLogic.js";
+import { saveArray, getArray } from "./scripts/localStorage.js";
+import { createTodo, getTodos, getTodo, toggleTodo, updateTodo, setTodos } from "./scripts/todoLogic.js";
+
+// On opening the app render the todos
+window.onload = () => {
+  const savedTodos = getArray();
+  console.log(getArray());
+  if (savedTodos) {
+    setTodos(savedTodos);
+  }
+  renderTodos();
+}
 
 //Get the elements
 const openModal = document.getElementById("openModal");
@@ -31,6 +42,7 @@ window.onclick = function (event) {
 addTodo.addEventListener("click", () => {
   createTodo(title.value, description.value, date.value, priority.value);
   closeModal();
+  saveArray(getTodos());
   renderTodos();
   sortTodos();
 })
@@ -41,6 +53,7 @@ function renderTodos() {
 
   getTodos().forEach(todo => {
     if (todo.status === "pending") {
+
       //Create the elements
       const todoItem = document.createElement("div");
       const para = document.createElement("p");
@@ -53,6 +66,7 @@ function renderTodos() {
       //Add also a button to be able to toggle it's status
       toggle.addEventListener("click", () => {
         toggleTodo(todo.id);
+        saveArray(getTodos());
         renderTodos();
       })
 
@@ -235,6 +249,7 @@ function showTodo(id) {
         updateTodo(newTitle.value, newDescription.value, newDueDate.value, newPriority.value, id)
         //Render and close
         renderTodos();
+        saveArray(getTodos());
         todoModal.style.display = "none";
       })
     })
@@ -254,3 +269,4 @@ function closeModal() {
   date.value = "";
   priority.value = "";
 }
+

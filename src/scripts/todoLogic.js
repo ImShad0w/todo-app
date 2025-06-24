@@ -1,4 +1,4 @@
-const todos = [];
+let todos = [];
 
 function createTodo(
   title = "Untitled",
@@ -10,6 +10,11 @@ function createTodo(
 ) {
   const todo = { title, description, dueDate, priority, status, id };
   todos.push(todo);
+}
+
+//Gets the array of todos from localStorage and replaces the empty one
+function setTodos(newTodos) {
+  todos = newTodos;
 }
 
 function getTodos() {
@@ -41,4 +46,5 @@ function updateTodo(title, description, dueDate, priority, id) {
     todo.priority = priority;
   }
 }
-export { createTodo, getTodos, toggleTodo, getTodo, updateTodo };
+
+export { createTodo, getTodos, toggleTodo, getTodo, updateTodo, setTodos };
