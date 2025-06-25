@@ -47,4 +47,17 @@ function updateTodo(title, description, dueDate, priority, id) {
   }
 }
 
-export { createTodo, getTodos, toggleTodo, getTodo, updateTodo, setTodos };
+//Projects section
+
+let projects = [];
+
+function createProject(name) {
+  const project = { name, todos: [] };
+  projects.push(project);
+}
+
+function getProjects() {
+  return projects.slice();
+}
+
+export { createTodo, getTodos, toggleTodo, getTodo, updateTodo, setTodos, createProject, getProjects };

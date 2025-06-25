@@ -1,16 +1,6 @@
 import "./css/styles.css";
 import { saveArray, getArray } from "./scripts/localStorage.js";
-import { createTodo, getTodos, getTodo, toggleTodo, updateTodo, setTodos } from "./scripts/todoLogic.js";
-
-// On opening the app render the todos
-window.onload = () => {
-  const savedTodos = getArray();
-  console.log(getArray());
-  if (savedTodos) {
-    setTodos(savedTodos);
-  }
-  renderTodos();
-}
+import { createTodo, getTodos, getTodo, toggleTodo, updateTodo, setTodos, getProjects, createProject } from "./scripts/todoLogic.js";
 
 //Get the elements
 const openModal = document.getElementById("openModal");
@@ -23,6 +13,17 @@ const priority = document.getElementById("priority");
 const addTodo = document.getElementById("addTodo");
 const todoList = document.getElementById("todo-list");
 const todoModal = document.getElementById("todoModal");
+const addProject = document.getElementById("createProject");
+const projectModal = document.getElementById("projectModal");
+
+// On opening the app render the todos
+window.onload = () => {
+  const savedTodos = getArray();
+  if (savedTodos) {
+    setTodos(savedTodos);
+  }
+  renderTodos();
+}
 
 openModal.addEventListener("click", () => {
   modal.style.display = "block";
@@ -171,6 +172,7 @@ function showTodo(id) {
     close.textContent = "Close";
     edit.textContent = "Edit";
 
+    //Add classes
     edit.classList.add("btn");
     close.classList.add("cancel");
 
@@ -269,4 +271,20 @@ function closeModal() {
   date.value = "";
   priority.value = "";
 }
+
+//Project part
+addProject.addEventListener("click", () => {
+  //Get the modal content
+  const projectModalContent = document.querySelectorAll(".modal-content")[2];
+
+  //Create the input fields and buttons
+  const name = document.createElement("input");
+  const btnDiv = document.createElement("div");
+  const create = document.createElement("button");
+  const cancel = document.createElement("button");
+
+
+  projectModal.style.display = "block";
+})
+
 

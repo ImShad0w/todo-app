@@ -30,6 +30,7 @@ body{
   background-color: var(--header-clr);
   width: 20vw;
   height: 100vh;
+  gap: 1em;
 }
 
 .main{
@@ -194,3 +195,26 @@ body{
 .date{
   margin: 0;
 }
+
+#createProject{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 1.5em;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#createProject i{
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  color: white;
+  background-color: var(--soft-blue);
+  display: flex; /* Use flexbox for the icon */
+  justify-content: center; /* Center icon horizontally */
+  align-items: center; /* Center icon vertically */
+}
+
