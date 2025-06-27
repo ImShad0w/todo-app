@@ -41,11 +41,15 @@ window.onclick = function (event) {
 }
 
 addTodo.addEventListener("click", () => {
-  createTodo(title.value, description.value, date.value, priority.value);
-  closeModal();
-  saveArray(getTodos());
-  renderTodos();
-  sortTodos();
+  if (title.value != "") {
+    createTodo(title.value, description.value, date.value, priority.value);
+    closeModal();
+    saveArray(getTodos());
+    renderTodos();
+    sortTodos();
+  } else {
+    alert("The task should atleast have a title!");
+  }
 })
 
 function renderTodos() {
@@ -273,18 +277,44 @@ function closeModal() {
 }
 
 //Project part
-addProject.addEventListener("click", () => {
-  //Get the modal content
-  const projectModalContent = document.querySelectorAll(".modal-content")[2];
-
-  //Create the input fields and buttons
-  const name = document.createElement("input");
-  const btnDiv = document.createElement("div");
-  const create = document.createElement("button");
-  const cancel = document.createElement("button");
-
-
-  projectModal.style.display = "block";
-})
+//addProject.addEventListener("click", () => {
+//  //Get the modal content
+//  const projectModalContent = document.querySelectorAll(".modal-content")[2];
+//  //Clear out the field before
+//  projectModalContent.innerHTML = "";
+//  //Create the input fields and buttons
+//  const name = document.createElement("input");
+//  const btnDiv = document.createElement("div");
+//  const create = document.createElement("button");
+//  const cancel = document.createElement("button");
+//
+//  //Add labels
+//  create.textContent = "Add project";
+//  cancel.textContent = "Cancel";
+//
+//  create.classList.add("btn");
+//  cancel.classList.add("cancel");
+//  //Append things to the modalContent
+//  projectModalContent.appendChild(name);
+//  projectModalContent.appendChild(btnDiv);
+//  btnDiv.appendChild(create);
+//  btnDiv.appendChild(cancel);
+//  projectModalContent.appendChild(btnDiv);
+//  projectModal.appendChild(projectModalContent);
+//
+//  //Open the modal
+//  projectModal.style.display = "block";
+//
+//  //Add event listeners to the buttons
+//  cancel.addEventListener("click", () => {
+//    projectModal.style.display = "none";
+//  })
+//
+//  create.addEventListener("click", () => {
+//    createProject(name.value);
+//    console.log(getProjects());
+//    projectModal.style.display = "none";
+//  })
+//})
 
 

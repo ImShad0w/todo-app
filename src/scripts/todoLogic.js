@@ -1,4 +1,5 @@
 let todos = [];
+let projects = [];
 
 function createTodo(
   title = "Untitled",
@@ -48,8 +49,6 @@ function updateTodo(title, description, dueDate, priority, id) {
 }
 
 //Projects section
-
-let projects = [];
 
 function createProject(name) {
   const project = { name, todos: [] };
