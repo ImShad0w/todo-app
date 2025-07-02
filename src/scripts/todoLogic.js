@@ -59,4 +59,14 @@ function getProjects() {
   return projects.slice();
 }
 
-export { createTodo, getTodos, toggleTodo, getTodo, updateTodo, setTodos, createProject, getProjects };
+function addTodoToProject(todo, projectName) {
+  const project = projects.find(p => p.name === projectName)
+  if (project) {
+    project.todos.push(todo);
+  }
+}
+
+function setProjs(newProjs) {
+  projects = newProjs;
+}
+export { createTodo, getTodos, toggleTodo, getTodo, updateTodo, setTodos, createProject, getProjects, addTodoToProject, setProjs };

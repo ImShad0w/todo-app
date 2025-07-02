@@ -1,6 +1,6 @@
 import "./css/styles.css";
-import { saveArray, getArray } from "./scripts/localStorage.js";
-import { createTodo, getTodos, getTodo, toggleTodo, updateTodo, setTodos, getProjects, createProject } from "./scripts/todoLogic.js";
+import { saveArray, getArray, saveProjects, getProjs } from "./scripts/localStorage.js";
+import { createTodo, getTodos, getTodo, toggleTodo, updateTodo, setTodos, getProjects, createProject, addTodoToProject, setProjs } from "./scripts/todoLogic.js";
 
 //Get the elements
 const openModal = document.getElementById("openModal");
@@ -16,13 +16,20 @@ const todoModal = document.getElementById("todoModal");
 const addProject = document.getElementById("createProject");
 const projectModal = document.getElementById("projectModal");
 
-// On opening the app render the todos
+// On opening the app render the todos and projects
 window.onload = () => {
   const savedTodos = getArray();
   if (savedTodos) {
     setTodos(savedTodos);
   }
+
+  const savedProjs = getProjs();
+  if (savedProjs) {
+    setProjs(savedProjs);
+  }
+
   renderTodos();
+  renderProjects();
 }
 
 openModal.addEventListener("click", () => {
@@ -203,6 +210,24 @@ function showTodo(id) {
       const newDueDate = document.createElement("input");
       const newPriority = document.createElement("select");
       const updateBtn = document.createElement("button");
+      const projectItem = document.createElement("select");
+
+      //Get the projects and append them into the select as options
+      const proj = getProjects();
+      if (proj) {
+        //Clear out the list
+        projectItem.innerHTML = "";
+        proj.forEach(project => {
+          //Create new options
+          const opt = document.createElement("option");
+          opt.textContent = project.name;
+          opt.value = project.name;
+          //Append
+          projectItem.appendChild(opt);
+        })
+      } else {
+        projectItem.innerHTML = "<option>No projects</option>"
+      }
 
       updateBtn.classList.add("btn");
       //Clear btnDiv
@@ -247,15 +272,20 @@ function showTodo(id) {
       todoModalContent.appendChild(newDescription);
       todoModalContent.appendChild(newDueDate);
       todoModalContent.appendChild(newPriority);
+      todoModalContent.appendChild(projectItem);
       btnDiv.appendChild(updateBtn);
       btnDiv.appendChild(close);
       todoModalContent.appendChild(btnDiv);
       //Add event listener to commit changes
       updateBtn.addEventListener("click", () => {
         updateTodo(newTitle.value, newDescription.value, newDueDate.value, newPriority.value, id)
+        if (projectItem.value != null) {
+          addTodoToProject(todo, projectItem.value);
+        }
         //Render and close
         renderTodos();
         saveArray(getTodos());
+        saveProjects(getProjects());
         todoModal.style.display = "none";
       })
     })
@@ -277,44 +307,72 @@ function closeModal() {
 }
 
 //Project part
-//addProject.addEventListener("click", () => {
-//  //Get the modal content
-//  const projectModalContent = document.querySelectorAll(".modal-content")[2];
-//  //Clear out the field before
-//  projectModalContent.innerHTML = "";
-//  //Create the input fields and buttons
-//  const name = document.createElement("input");
-//  const btnDiv = document.createElement("div");
-//  const create = document.createElement("button");
-//  const cancel = document.createElement("button");
-//
-//  //Add labels
-//  create.textContent = "Add project";
-//  cancel.textContent = "Cancel";
-//
-//  create.classList.add("btn");
-//  cancel.classList.add("cancel");
-//  //Append things to the modalContent
-//  projectModalContent.appendChild(name);
-//  projectModalContent.appendChild(btnDiv);
-//  btnDiv.appendChild(create);
-//  btnDiv.appendChild(cancel);
-//  projectModalContent.appendChild(btnDiv);
-//  projectModal.appendChild(projectModalContent);
-//
-//  //Open the modal
-//  projectModal.style.display = "block";
-//
-//  //Add event listeners to the buttons
-//  cancel.addEventListener("click", () => {
-//    projectModal.style.display = "none";
-//  })
-//
-//  create.addEventListener("click", () => {
-//    createProject(name.value);
-//    console.log(getProjects());
-//    projectModal.style.display = "none";
-//  })
-//})
+addProject.addEventListener("click", () => {
+  //Get the modal content
+  const projectModalContent = document.querySelectorAll(".modal-content")[2];
+  //Clear out the field before
+  projectModalContent.innerHTML = "";
+  //Create the input fields and buttons
+  const name = document.createElement("input");
+  const btnDiv = document.createElement("div");
+  const create = document.createElement("button");
+  const cancel = document.createElement("button");
+
+  //Add placeholder for the name
+  name.placeholder = "Project 1";
+  //Add labels
+  create.textContent = "Add project";
+  cancel.textContent = "Cancel";
+
+  create.classList.add("btn");
+  cancel.classList.add("cancel");
+  //Append things to the modalContent
+  projectModalContent.appendChild(name);
+  projectModalContent.appendChild(btnDiv);
+  btnDiv.appendChild(create);
+  btnDiv.appendChild(cancel);
+  projectModalContent.appendChild(btnDiv);
+  projectModal.appendChild(projectModalContent);
+
+  //Open the modal
+  projectModal.style.display = "block";
+
+  //Add event listeners to the buttons
+  cancel.addEventListener("click", () => {
+    projectModal.style.display = "none";
+  })
+
+  create.addEventListener("click", () => {
+    createProject(name.value);
+    saveProjects(getProjects());
+    projectModal.style.display = "none";
+    renderProjects();
+  })
+})
 
 
+function renderProjects() {
+  //Get the div where we are going to store the projects
+  const projects = document.getElementById("projects-list");
+
+  //Empty it before loading
+  projects.innerHTML = "";
+
+  //Get the current projects
+  const proj = getProjects();
+
+  if (proj) {
+    proj.forEach(project => {
+      //Create the needed elements
+      const projectDiv = document.createElement("div");
+      const projectName = document.createElement("p");
+
+      //Give the values
+      projectName.textContent = "# " + project.name;
+
+      //Append the things
+      projectDiv.appendChild(projectName);
+      projects.appendChild(projectDiv);
+    })
+  }
+}

@@ -26,7 +26,7 @@ body{
 .sidebar{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding-left: 2%;
   background-color: var(--header-clr);
   width: 20vw;
   height: 100vh;
@@ -130,7 +130,6 @@ body{
 
 #openModal{
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 5px;
   font-size: 1.5em;
@@ -198,7 +197,6 @@ body{
 
 #createProject{
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 5px;
   font-size: 1.5em;
@@ -229,4 +227,18 @@ body{
   transform: translateX(-50%); /* Adjust for centering */
 }
 
+.projects-section{
+ display: flex;
+  flex-direction: column;
+  max-width: 90%;
+  margin-top: 10%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+#projects-list{
+  font-size: 1.4em;
+}
 
