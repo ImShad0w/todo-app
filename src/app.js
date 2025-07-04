@@ -1,6 +1,6 @@
 import "./css/styles.css";
 import { saveArray, getArray, saveProjects, getProjs } from "./scripts/localStorage.js";
-import { createTodo, getTodos, getTodo, toggleTodo, updateTodo, setTodos, getProjects, createProject, addTodoToProject, setProjs } from "./scripts/todoLogic.js";
+import { createTodo, getTodos, getTodo, toggleTodo, updateTodo, setTodos, getProjects, createProject, addTodoToProject, setProjs, removeTodoFromProject, toggleTodoInProject } from "./scripts/todoLogic.js";
 
 //Get the elements
 const openModal = document.getElementById("openModal");
@@ -49,7 +49,7 @@ window.onclick = function (event) {
 
 addTodo.addEventListener("click", () => {
   if (title.value != "") {
-    createTodo(title.value, description.value, date.value, priority.value);
+    const todo = createTodo(title.value, description.value, date.value, priority.value);
     closeModal();
     saveArray(getTodos());
     renderTodos();
@@ -79,6 +79,7 @@ function renderTodos() {
       toggle.addEventListener("click", () => {
         toggleTodo(todo.id);
         saveArray(getTodos());
+        saveProjects(getProjs());
         renderTodos();
       })
 
@@ -280,8 +281,12 @@ function showTodo(id) {
       updateBtn.addEventListener("click", () => {
         updateTodo(newTitle.value, newDescription.value, newDueDate.value, newPriority.value, id)
         if (projectItem.value != null) {
+          //First remove the todo from the "old" projects
+          removeTodoFromProject(todo);
+          //Add to the new project
           addTodoToProject(todo, projectItem.value);
         }
+
         //Render and close
         renderTodos();
         saveArray(getTodos());
@@ -361,18 +366,87 @@ function renderProjects() {
   //Get the current projects
   const proj = getProjects();
 
-  if (proj) {
-    proj.forEach(project => {
-      //Create the needed elements
-      const projectDiv = document.createElement("div");
-      const projectName = document.createElement("p");
+  proj.forEach(project => {
+    //Create an element
+    const projectDiv = document.createElement("div");
+    const projectName = document.createElement("p");
 
-      //Give the values
-      projectName.textContent = "# " + project.name;
+    projectName.textContent = "# " + project.name;
 
-      //Append the things
-      projectDiv.appendChild(projectName);
-      projects.appendChild(projectDiv);
+    //Append items to div
+    projectDiv.appendChild(projectName);
+    projects.appendChild(projectDiv);
+
+    projectDiv.addEventListener("click", () => {
+      renderTodosInProject(project);
     })
-  }
+  })
+}
+
+function renderTodosInProject(project) {
+  //Grab the container and empty it
+  todoList.innerHTML = "";
+
+  //List all of the todo's from the project
+  project.todos.forEach(todo => {
+    //Create the new elements and other things
+    if (todo.status === "pending") {
+      //Create the elements
+      const todoItem = document.createElement("div");
+      const para = document.createElement("p");
+      const para2 = document.createElement("p");
+      const para3 = document.createElement("p");
+      const toggle = document.createElement("button");
+      const todoBtn = document.createElement("div");
+      const todoContent = document.createElement("div");
+
+      //Add also a button to be able to toggle it's status
+      toggle.addEventListener("click", () => {
+        toggleTodo(todo.id);
+        toggleTodoInProject(todo, project.name);
+        saveArray(getTodos());
+        saveProjects(getProjs());
+        renderTodosInProject(project);
+        console.log(getProjs());
+      })
+
+      //Assign the values
+      para.textContent = todo.title;
+      para2.textContent = todo.description;
+      para2.classList.add("description");
+      para3.textContent = todo.dueDate;
+      todoItem.classList.add("todo-item");
+      toggle.classList.add("toggle-btn");
+
+      //Assign an event listener to todoItem
+      todoContent.addEventListener("click", () => {
+        showTodo(todo.id);
+      })
+
+      //Style the button according to the priority
+      switch (todo.priority) {
+        case "mild":
+          toggle.classList.add("mild");
+          break;
+        case "severe":
+          toggle.classList.add("severe");
+          break;
+        case "high":
+          toggle.classList.add("high");
+          break;
+        case "low":
+          toggle.classList.add("low");
+          break;
+      }
+
+      //Append the elements
+      todoBtn.appendChild(toggle);
+      todoContent.appendChild(para);
+      todoContent.appendChild(para2);
+      todoContent.appendChild(para3);
+      todoItem.appendChild(todoBtn);
+      todoItem.appendChild(todoContent);
+      todoList.appendChild(todoItem);
+    }
+  })
 }

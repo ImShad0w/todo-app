@@ -1,3 +1,5 @@
+import { saveProjects } from "./localStorage.js";
+
 let todos = [];
 let projects = [];
 
@@ -66,7 +68,28 @@ function addTodoToProject(todo, projectName) {
   }
 }
 
+function removeTodoFromProject(todo) {
+  for (let i = 0; i < projects.length; i++) {
+    let project = projects[i];
+    for (let o = 0; o < project.todos.length; o++) {
+      let task = project.todos[o];
+      if (todo.id === task.id) {
+        project.todos.splice(o, 1);
+      }
+    }
+  }
+}
+
+function toggleTodoInProject(task, projectName) {
+  const project = projects.find(p => p.name === projectName);
+  const todo = project.todos.find(todo => todo.id === task.id);
+  todo.status = todo.status === "pending" ? "done" : "pending";
+  setProjs(projects);
+}
+
 function setProjs(newProjs) {
   projects = newProjs;
+  saveProjects(projects);
 }
-export { createTodo, getTodos, toggleTodo, getTodo, updateTodo, setTodos, createProject, getProjects, addTodoToProject, setProjs };
+
+export { createTodo, getTodos, toggleTodo, getTodo, updateTodo, setTodos, createProject, getProjects, addTodoToProject, setProjs, removeTodoFromProject, toggleTodoInProject };
