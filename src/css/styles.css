@@ -26,10 +26,11 @@ body{
 .sidebar{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding-left: 2%;
   background-color: var(--header-clr);
   width: 20vw;
   height: 100vh;
+  gap: 1em;
 }
 
 .main{
@@ -129,7 +130,6 @@ body{
 
 #openModal{
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 5px;
   font-size: 1.5em;
@@ -194,3 +194,51 @@ body{
 .date{
   margin: 0;
 }
+
+#createProject{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1.5em;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#createProject i{
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  color: white;
+  background-color: var(--soft-blue);
+  display: flex; /* Use flexbox for the icon */
+  justify-content: center; /* Center icon horizontally */
+  align-items: center; /* Center icon vertically */
+}
+
+#projectModal{
+  display: none; 
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  height: 50%;
+  transform: translateX(-50%); /* Adjust for centering */
+}
+
+.projects-section{
+ display: flex;
+  flex-direction: column;
+  max-width: 90%;
+  margin-top: 10%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+#projects-list{
+  font-size: 1.4em;
+}
+
