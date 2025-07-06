@@ -1,6 +1,6 @@
 import "./css/styles.css";
 import { saveArray, getArray, saveProjects, getProjs } from "./scripts/localStorage.js";
-import { createTodo, getTodos, getTodo, toggleTodo, updateTodo, setTodos, getProjects, createProject, addTodoToProject, setProjs, removeTodoFromProject, toggleTodoInProject } from "./scripts/todoLogic.js";
+import { createTodo, getTodos, getTodo, toggleTodo, updateTodo, setTodos, getProjects, createProject, addTodoToProject, setProjs, removeTodoFromProject, toggleTodoInProject, removeProject } from "./scripts/todoLogic.js";
 
 //Get the elements
 const openModal = document.getElementById("openModal");
@@ -30,6 +30,7 @@ window.onload = () => {
 
   renderTodos();
   renderProjects();
+  renderTodosInProject(getProjects()[0]);
 }
 
 openModal.addEventListener("click", () => {
@@ -49,10 +50,14 @@ window.onclick = function (event) {
 
 addTodo.addEventListener("click", () => {
   if (title.value != "") {
-    const todo = createTodo(title.value, description.value, date.value, priority.value);
+    createTodo(title.value, description.value, date.value, priority.value);
+    const todos = getTodos();
+    const lastTodo = todos[todos.length - 1];
+    addTodoToProject(lastTodo, "Home");
+    saveProjects(getProjects());
     closeModal();
-    saveArray(getTodos());
-    renderTodos();
+    //saveArray(getTodos());
+    renderTodosInProject(getProjects()[0]);
     sortTodos();
   } else {
     alert("The task should atleast have a title!");
@@ -370,15 +375,34 @@ function renderProjects() {
     //Create an element
     const projectDiv = document.createElement("div");
     const projectName = document.createElement("p");
+    const edit = document.createElement("button");
+    const remove = document.createElement("button");
+    const btnDiv = document.createElement("div");
+
+    edit.textContent = "✏️";
+
+    remove.textContent = "🗑️";
 
     projectName.textContent = "# " + project.name;
 
+    projectDiv.style.display = "flex";
+    projectDiv.style.alignItems = "center";
+
+
     //Append items to div
+    btnDiv.appendChild(edit);
+    btnDiv.appendChild(remove);
     projectDiv.appendChild(projectName);
+    projectDiv.appendChild(btnDiv);
     projects.appendChild(projectDiv);
 
     projectDiv.addEventListener("click", () => {
       renderTodosInProject(project);
+    })
+
+    remove.addEventListener("click", () => {
+      removeProject(project);
+      renderProjects();
     })
   })
 }

@@ -92,4 +92,11 @@ function setProjs(newProjs) {
   saveProjects(projects);
 }
 
-export { createTodo, getTodos, toggleTodo, getTodo, updateTodo, setTodos, createProject, getProjects, addTodoToProject, setProjs, removeTodoFromProject, toggleTodoInProject };
+function removeProject(proj) {
+  const project = projects.findIndex(p => p.name === proj.name);
+  if (project !== -1) {
+    projects.splice(project, 1);
+  }
+}
+
+export { createTodo, getTodos, toggleTodo, getTodo, updateTodo, setTodos, createProject, getProjects, addTodoToProject, setProjs, removeTodoFromProject, toggleTodoInProject, removeProject };
