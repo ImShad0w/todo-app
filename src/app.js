@@ -1,6 +1,6 @@
 import "./css/styles.css";
 import { saveArray, getArray, saveProjects, getProjs } from "./scripts/localStorage.js";
-import { createTodo, getTodos, getTodo, toggleTodo, updateTodo, setTodos, getProjects, createProject, addTodoToProject, setProjs, removeTodoFromProject, toggleTodoInProject, removeProject } from "./scripts/todoLogic.js";
+import { createTodo, getTodos, getTodo, toggleTodo, updateTodo, setTodos, getProjects, createProject, addTodoToProject, setProjs, removeTodoFromProject, toggleTodoInProject, removeProject, updateProject } from "./scripts/todoLogic.js";
 
 //Get the elements
 const openModal = document.getElementById("openModal");
@@ -293,7 +293,7 @@ function showTodo(id) {
         }
 
         //Render and close
-        renderTodos();
+        renderTodosInProject(getProjects()[0]);
         saveArray(getTodos());
         saveProjects(getProjects());
         todoModal.style.display = "none";
@@ -404,6 +404,48 @@ function renderProjects() {
       removeProject(project);
       renderProjects();
     })
+
+    edit.addEventListener("click", () => {
+      //Get the modal 
+      const projectModalContent = document.querySelectorAll(".modal-content")[2];
+      const projectModal = document.getElementById("projectModal");
+
+      //Empty the projectModalContent
+      projectModalContent.innerHTML = "";
+      //Create the elements necessary
+      const newTitle = document.createElement("input");
+      const save = document.createElement("button");
+      const cancel = document.createElement("button");
+      const btnDiv2 = document.createElement("div");
+
+      //Add the values
+      newTitle.value = project.name;
+
+      save.textContent = "Save";
+      cancel.textContent = "Cancel";
+
+      newTitle.classList.add("title");
+      save.classList.add("btn");
+      cancel.classList.add("cancel");
+
+      btnDiv2.appendChild(save);
+      btnDiv2.appendChild(cancel);
+
+      projectModalContent.appendChild(newTitle);
+      projectModalContent.appendChild(btnDiv2);
+      projectModal.appendChild(projectModalContent);
+
+      projectModal.style.display = "block";
+
+      save.addEventListener("click", () => {
+        updateProject(project, newTitle.value);
+        renderProjects();
+        projectModal.style.display = "none";
+      })
+      cancel.addEventListener("click", () => {
+        projectModal.style.display = "none";
+      })
+    })
   })
 }
 
@@ -426,7 +468,6 @@ function renderTodosInProject(project) {
 
       //Add also a button to be able to toggle it's status
       toggle.addEventListener("click", () => {
-        toggleTodo(todo.id);
         toggleTodoInProject(todo, project.name);
         saveArray(getTodos());
         saveProjects(getProjs());

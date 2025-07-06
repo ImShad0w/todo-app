@@ -99,4 +99,11 @@ function removeProject(proj) {
   }
 }
 
-export { createTodo, getTodos, toggleTodo, getTodo, updateTodo, setTodos, createProject, getProjects, addTodoToProject, setProjs, removeTodoFromProject, toggleTodoInProject, removeProject };
+function updateProject(proj, name) {
+  const project = projects.find(p => p.name === proj.name)
+  if (project) {
+    project.name = name;
+  }
+}
+
+export { createTodo, getTodos, toggleTodo, getTodo, updateTodo, setTodos, createProject, getProjects, addTodoToProject, setProjs, removeTodoFromProject, toggleTodoInProject, removeProject, updateProject };
