@@ -379,15 +379,15 @@ function renderProjects() {
     const remove = document.createElement("button");
     const btnDiv = document.createElement("div");
 
-    edit.textContent = "✏️";
+    edit.innerHTML = '<i class="fa-solid fa-pen"></i>';
 
-    remove.textContent = "🗑️";
+    remove.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
 
     projectName.textContent = "# " + project.name;
 
-    projectDiv.style.display = "flex";
-    projectDiv.style.alignItems = "center";
+    projectDiv.classList.add("item");
 
+    btnDiv.classList.add("btnDiv");
 
     //Append items to div
     btnDiv.appendChild(edit);
