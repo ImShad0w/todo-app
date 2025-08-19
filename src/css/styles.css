@@ -252,7 +252,12 @@ body{
   padding: 3px;
   border-radius: 3px;
   background: none;
-  transition: background-color 0.2s ease-in;
+  opacity: 0;
+  transition: background-color 0.2s ease-in, opacity 0.3s ease-in;
+}
+
+#projects-list > div:hover button{
+  opacity: 1;
 }
 
 #projects-list button:hover{
