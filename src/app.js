@@ -2,6 +2,15 @@ import "./css/styles.css";
 import { saveArray, getArray, saveProjects, getProjs } from "./scripts/localStorage.js";
 import { createTodo, getTodos, getTodo, toggleTodo, updateTodo, setTodos, getProjects, createProject, addTodoToProject, setProjs, removeTodoFromProject, toggleTodoInProject, removeProject, updateProject } from "./scripts/todoLogic.js";
 
+//For the first visit/opening of the app
+let firstTime = true;
+
+if (firstTime) {
+  createProject("Home");
+  firstTime = false;
+}
+
+//Create the default project
 //Get the elements
 const openModal = document.getElementById("openModal");
 const title = document.getElementById("title");
@@ -22,12 +31,10 @@ window.onload = () => {
   if (savedTodos) {
     setTodos(savedTodos);
   }
-
   const savedProjs = getProjs();
   if (savedProjs) {
     setProjs(savedProjs);
   }
-
   renderTodos();
   renderProjects();
   renderTodosInProject(getProjects()[0]);
@@ -401,8 +408,12 @@ function renderProjects() {
     })
 
     remove.addEventListener("click", () => {
-      removeProject(project);
-      renderProjects();
+      let choice = confirm("Do you really want to delete this project?");
+      if (choice) {
+        removeProject(project);
+        renderProjects();
+        saveProjects(getProjects());
+      }
     })
 
     edit.addEventListener("click", () => {

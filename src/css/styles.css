@@ -242,3 +242,24 @@ body{
   font-size: 1.4em;
 }
 
+#projects-list > div{
+  display: flex;
+  justify-content: space-between;
+}
+
+#projects-list button{
+  border:none;
+  padding: 3px;
+  border-radius: 3px;
+  background: none;
+  transition: background-color 0.2s ease-in;
+}
+
+#projects-list button:hover{
+  background-color: gray;
+}
+
+#projects-list button:active{
+  background-color: white;
+}
+
